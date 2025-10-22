@@ -1,49 +1,56 @@
-Name : Harsh Kanojia
+# 🕵️‍♂️ ShadowScan  
+**IP Vulnerability & Reconnaissance Scanner**
 
-Company Name : CODTECH IT SOLUTIONS
+ShadowScan is a lightweight **Bash-based vulnerability scanner** that automates IP reconnaissance using `nmap`, `whois`, and `nslookup`.  
+It identifies open ports, analyzes service versions for potential vulnerabilities, and retrieves WHOIS + DNS data — all in one go.  
 
-ID : CT4CSEH3610
+---
 
-Domain : Cyber Security and Ethical Hacking
+## 🚀 Features
+- 🔍 **Port & Service Scanning** — Uses `nmap` to detect open ports and running service versions.  
+- 🧠 **Basic Vulnerability Analysis** — Flags services (like Apache 2.4.x) that might be prone to known exploits.  
+- 🌐 **WHOIS Lookup** — Gathers domain registration and ownership info for each IP.  
+- 🔎 **DNS Resolution (NSLOOKUP)** — Retrieves associated domain names or host records.  
+- 📋 **Clean, Organized Output** — Displays status, vulnerabilities, and lookup results per IP in a structured format.  
 
-Duration : JULY 1st,2024 to AUGUST 1st, 2024
+---
 
-Mentor : SANTHOSH
+## 🧰 Prerequisites
+Make sure the following tools are installed on your system:
 
-IP Vulnerability Scanner
-ip_vulnerability_scanner.sh is a Bash script that scans IP addresses for vulnerabilities using nmap, retrieves WHOIS data, and performs NSLOOKUP. It identifies open ports and common vulnerabilities, providing detailed results for each IP address.
-
-Features
-Scans IP addresses for open ports and service versions using nmap
-Analyzes scan results to identify potential vulnerabilities
-Retrieves WHOIS information for each IP address
-Performs NSLOOKUP to get DNS information
-Outputs detailed results for each IP address
-Prerequisites
-Make sure you have the following tools installed on your system:
-
-nmap
-whois
-nslookup (part of dnsutils package on Debian-based systems)
-You can install them using:
-
+```bash
 sudo apt-get install nmap whois dnsutils
+```
+## ⚙️ Installation
 
-Installation
-Clone the repository or download the script directly:
+Clone this repository or download the script directly:
 
-git clone https://github.com/yourusername/ip_vulnerability_scanner.git
-cd ip_vulnerability_scanner
+```bash
+git clone https://github.com/<yourusername>/shadowscan.git
+cd shadowscan
+chmod +x shadowscan.sh
+```
+## 🧪 Usage
 
-Make the script executable:
-chmod +x ip_vulnerability_scanner.sh
-
-Usage
-Run the script with IP addresses as arguments:
-
-./ip_vulnerability_scanner.sh <IP1> <IP2> ...
-
-Example
-
-./ip_vulnerability_scanner.sh 192.168.1.1 192.168.1.2
+Run the script followed by one or more IP addresses:
+```bash
+./shadowscan.sh <IP1> <IP2> ...
+```
+```bash
+./shadowscan.sh 8.8.8.8 1.1.1.1
+```
+## Example Output
+```bash
+Scanning IP: 8.8.8.8
+Results for IP: 8.8.8.8
+Status: No vulnerabilities found
+WHOIS Info:
+[WHOIS data here]
+NSLOOKUP Info: dns.google.
+------------------------
+```
+## ⚠️ Disclaimer
+This tool is intended for educational and ethical use only.
+Do not scan networks or systems you don’t have explicit permission to test.
+The author is not responsible for any misuse or illegal activity.
 
