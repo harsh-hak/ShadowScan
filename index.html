@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowScan - The Ultimate Subdomain Enumerator</title>
+    <meta name="description"
+        content="Hunt down vulnerabilities in the shadows. Fast, concurrent, and stealthy subdomain enumeration tool written in Bash.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div class="glow-blob"></div>
+    <div class="glow-blob blob-2"></div>
+
+    <header class="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <i data-lucide="shield-alert" class="text-primary"></i>
+                <span>ShadowScan</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#demo">Demo</a>
+                <a href="https://github.com/harsh-hak/ShadowScan" target="_blank" class="btn btn-outline">
+                    <i data-lucide="github"></i> Developer GitHub
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero container">
+            <div class="hero-content">
+                <div class="badge">v1.2.0 • Written in Bash 🦀</div>
+                <h1 class="hero-title">Hunt down vulnerabilities in the <span class="text-primary">shadows.</span></h1>
+                <p class="hero-subtitle">
+                    ShadowScan is a blazing fast, highly concurrent subdomain enumeration tool designed for bug bounty
+                    hunters and penetration testers. Find what others miss.
+                </p>
+                <div class="hero-actions">
+                    <a href="https://github.com/harsh-hak/ShadowScan" target="_blank" class="btn btn-primary">
+                        <i data-lucide="download"></i> Download Release
+                    </a>
+
+
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                        <div class="title">user@shadow: ~</div>
+                    </div>
+                    <div class="terminal-body" id="typewriter">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features container">
+            <h2 class="section-title">Why ShadowScan?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon-wrapper">
+                        <i data-lucide="zap"></i>
+                    </div>
+                    <h3>Blazing Fast</h3>
+                    <p>Written in Bash with fearless concurrency. Leverages asynchronous networking to scan thousands of
+                        subdomains in seconds.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-wrapper">
+                        <i data-lucide="eye-off"></i>
+                    </div>
+                    <h3>Stealth & Proxy Support</h3>
+                    <p>Built-in jitter, rate limiting, and HTTP/SOCKS proxy rotation to keep your scans undetected and
+                        bypass restrictions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-wrapper">
+                        <i data-lucide="file-code-2"></i>
+                    </div>
+                    <h3>Multi-Format Output</h3>
+                    <p>Export your valuable findings seamlessly to JSON, CSV, or plain text to pipe into your other
+                        security tools.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-wrapper">
+                        <i data-lucide="network"></i>
+                    </div>
+                    <h3>Smart Wordlists</h3>
+                    <p>Supports massive custom wordlists, permutations, and intelligent auto-detection of wildcard DNS
+                        to reduce false positives.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="demo" class="demo-section container">
+            <div class="glass-banner">
+                <div class="banner-content">
+                    <h2>Ready to start hunting?</h2>
+                    <p>Get up and running in a single command.
+                    </p>
+                    <div class="code-block">
+                        <code>git clone https://github.com/harsh-hak/ShadowScan</code>
+                        <button class="copy-btn" id="copyBtn"><i data-lucide="copy"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <i data-lucide="shield-alert" class="text-primary"></i>
+                <span>ShadowScan</span>
+            </div>
+            <p>Made with ❤️ by Harsh Kanojia</p>
+            <div class="footer-links">
+                <a href="https://github.com/harsh-hak/ShadowScan" target="_blank"><i data-lucide="github"></i></a>
+                <a href="https://www.linkedin.com/in/harsh-kanojia369/" target="_blank"><i data-lucide="linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
