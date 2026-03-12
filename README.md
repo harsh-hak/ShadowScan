@@ -46,7 +46,7 @@ Results for IP: 8.8.8.8
 Status: No vulnerabilities found
 WHOIS Info:
 [WHOIS data here]
-NSLOOKUP Info: dns.google.
+NSLOOKUP Info: dns.google.com
 ------------------------
 ```
 ## ⚠️ Disclaimer
