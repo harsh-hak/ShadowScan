@@ -524,6 +524,33 @@ footer {
     gap: 0.5rem;
 }
 
+.owner-link {
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 600;
+    position: relative;
+    transition: color 0.2s;
+}
+
+.owner-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--primary);
+    transition: width 0.3s;
+}
+
+.owner-link:hover {
+    color: var(--primary);
+}
+
+.owner-link:hover::after {
+    width: 100%;
+}
+
 .footer-links {
     display: flex;
     gap: 1rem;

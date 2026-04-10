@@ -68,7 +68,7 @@ Unauthorized scanning of networks is illegal and unethical. The authors assume n
 ---
 
 ## 🤝 Contributing & Support
-Made with ❤️ by [Harsh Kanojia](https://www.linkedin.com/in/harsh-kanojia369/).
+Made with ❤️ by [Harsh Kanojia](https://harsh-hak.github.io/).
 Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/harsh-hak/ShadowScan/issues).
 
 **ShadowScan: Hunt down vulnerabilities in the shadows.**
