@@ -1,62 +1,159 @@
-// main.js
+/**
+ * ShadowScan Frontend Logic
+ * Version: 1.2.5
+ * Author: Harsh Kanojia / Overhauled by Antigravity
+ * 
+ * Handles terminal typing simulations, scroll reveal animations,
+ * and interactive UI components like copy-to-clipboard.
+ */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Initialize Lucide Icons
-    if (window.lucide) {
-        window.lucide.createIcons();
-    }
+    
+    /**
+     * Initializes Lucide icons across the document.
+     * Can be called whenever new elements are added dynamically.
+     */
+    const initIcons = () => {
+        if (window.lucide) {
+            window.lucide.createIcons();
+        }
+    };
+    initIcons();
 
-    // 2. Typewriter Effect for Terminal
-    const typewriterElement = document.getElementById('typewriter');
-    if (typewriterElement) {
-        const lines = [
-            { text: '$ shadowscan -d example.com', class: 'cmd-prompt' },
-            { text: '[*] Initializing ShadowScan v1.2.0...', class: 'cmd-info' },
-            { text: '[*] Loading wordlist: massive.txt (1.2M entries)', class: 'cmd-info' },
-            { text: '[*] Starting stealth scan with 50 threads...', class: 'cmd-info' },
-            { text: '[+] Found: api.example.com (200 OK)', class: 'cmd-success' },
-            { text: '[+] Found: dev.example.com (403 Forbidden)', class: 'cmd-success' },
-            { text: '[+] Found: staging.example.com (200 OK)', class: 'cmd-success' },
-            { text: '[+] Found: vpn.example.com (200 OK)', class: 'cmd-success' },
-            { text: '[+] Found: mail.example.com (200 OK)', class: 'cmd-success' },
-            { text: '[*] Scan complete. 12 subdomains discovered.', class: 'cmd-info' },
-            { text: '[*] Results saved to shadow_results.json', class: 'cmd-info' },
-            { text: '$ _', class: 'cmd-prompt' }
-        ];
-
-        let lineIndex = 0;
-        let charIndex = 0;
-
-        function typeLine() {
-            if (lineIndex < lines.length) {
-                const currentLine = lines[lineIndex];
-                
-                // Create line container if it doesn't exist
-                let lineDiv = typewriterElement.lastElementChild;
-                if (!lineDiv || lineDiv.dataset.lineIndex !== lineIndex.toString()) {
-                    lineDiv = document.createElement('div');
-                    lineDiv.className = currentLine.class || '';
-                    lineDiv.dataset.lineIndex = lineIndex;
-                    lineDiv.style.marginBottom = '4px';
-                    typewriterElement.appendChild(lineDiv);
-                }
-
-                if (charIndex < currentLine.text.length) {
-                    lineDiv.textContent += currentLine.text.charAt(charIndex);
-                    charIndex++;
-                    setTimeout(typeLine, Math.random() * 50 + 20);
-                } else {
-                    lineIndex++;
-                    charIndex = 0;
-                    setTimeout(typeLine, 500);
-                }
+    /**
+     * Intersection Observer for Reveal Animations.
+     * Triggers the 'active' class on elements when they enter the viewport.
+     */
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
             }
+        });
+    }, { threshold: 0.1 });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    /**
+     * Class representing a specialized Terminal interface.
+     * Manages typewriter-style text rendering and progress simulations.
+     */
+    class Terminal {
+        /**
+         * @param {string} elementId - The ID of the container element.
+         */
+        constructor(elementId) {
+            this.container = document.getElementById(elementId);
+            this.isTyping = false;
         }
 
-        typeLine();
+        /**
+         * Sequentially renders a list of commands/logs.
+         * @param {Array<Object>} lines - Array of line objects {text, class, type, delay}.
+         */
+        async type(lines) {
+            if (this.isTyping) return;
+            this.isTyping = true;
+            this.container.innerHTML = '';
+
+            for (const line of lines) {
+                const lineDiv = document.createElement('div');
+                lineDiv.className = line.class || '';
+                lineDiv.style.marginBottom = '6px';
+                this.container.appendChild(lineDiv);
+
+                if (line.type === 'progress') {
+                    await this.animateProgress(lineDiv, line.text);
+                } else {
+                    await this.typeString(lineDiv, line.text);
+                }
+                
+                // Ensure the terminal always shows the latest output
+                this.container.scrollTop = this.container.scrollHeight;
+                await new Promise(resolve => setTimeout(resolve, line.delay || 300));
+            }
+            this.isTyping = false;
+        }
+
+        /**
+         * Animates a single string character by character.
+         * @private
+         */
+        typeString(element, text) {
+            return new Promise(resolve => {
+                let i = 0;
+                const interval = setInterval(() => {
+                    element.textContent += text[i];
+                    i++;
+                    if (i === text.length) {
+                        clearInterval(interval);
+                        resolve();
+                    }
+                }, Math.random() * 30 + 10);
+            });
+        }
+
+        /**
+         * Animates a CLI-style progress bar.
+         * @private
+         */
+        animateProgress(element, label) {
+            return new Promise(resolve => {
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.floor(Math.random() * 15);
+                    if (progress > 100) progress = 100;
+                    
+                    const bars = Math.floor(progress / 5);
+                    const barStr = '█'.repeat(bars) + '░'.repeat(20 - bars);
+                    element.textContent = `${label} [${barStr}] ${progress}%`;
+                    
+                    if (progress === 100) {
+                        clearInterval(interval);
+                        resolve();
+                    }
+                }, 100);
+            });
+        }
     }
 
-    // 3. Copy to Clipboard Functionality
+    // Initialize Main Hero Terminal
+    const mainTerminal = new Terminal('typewriter');
+    const initialLines = [
+        { text: '$ shadowscan --stealth target.infra', class: 'cmd-prompt' },
+        { text: '[*] Initializing Shadow Engine v1.2.5...', class: 'cmd-info' },
+        { text: '[*] Mapping network topography...', class: 'cmd-info', type: 'progress' },
+        { text: '[+] Bypass successful: Cloud Armor WAF detected.', class: 'cmd-success' },
+        { text: '[*] Enumerating subdomains via async pool...', class: 'cmd-info' },
+        { text: '[+] core.target.infra (200 OK)', class: 'cmd-success' },
+        { text: '[+] vault.target.infra (403 Forbidden)', class: 'cmd-warning' },
+        { text: '[+] dev-api.target.infra (200 OK)', class: 'cmd-success' },
+        { text: '[*] Scan complete. 18 endpoints identified.', class: 'cmd-info', delay: 1000 },
+        { text: '$ _', class: 'cmd-prompt' }
+    ];
+
+    // Trigger initial animation
+    if (mainTerminal.container) {
+        mainTerminal.type(initialLines);
+    }
+
+    /**
+     * Start Mock Scan Trigger.
+     * Linked to the "Start Mock Scan" button in the hero section.
+     */
+    const startScanBtn = document.querySelector('a[href="#demo"]');
+    if (startScanBtn) {
+        startScanBtn.addEventListener('click', (e) => {
+            // Restart terminal animation for visual feedback
+            setTimeout(() => mainTerminal.type(initialLines), 800);
+        });
+    }
+
+    /**
+     * Copy to Clipboard Functionality.
+     * Provides visual feedback via icon change and color pulse.
+     */
     const copyBtn = document.getElementById('copyBtn');
     if (copyBtn) {
         copyBtn.addEventListener('click', async () => {
@@ -64,24 +161,23 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 await navigator.clipboard.writeText(codeText);
                 
-                // Visual feedback
                 const icon = copyBtn.querySelector('i');
                 const originalIcon = icon.getAttribute('data-lucide');
                 
-                icon.setAttribute('data-lucide', 'check');
-                lucide.createIcons();
-                copyBtn.style.color = '#0df20d';
+                // Success State feedback
+                icon.setAttribute('data-lucide', 'check-circle');
+                initIcons();
+                copyBtn.style.color = 'var(--primary)';
 
                 setTimeout(() => {
+                    // Revert to original state
                     icon.setAttribute('data-lucide', originalIcon);
-                    lucide.createIcons();
+                    initIcons();
                     copyBtn.style.color = '';
                 }, 2000);
             } catch (err) {
-                console.error('Failed to copy: ', err);
+                console.error('Failed to copy text: ', err);
             }
         });
     }
-
-    // 4. Smooth Scrolling for Nav Links (Optional enhancement, already in CSS)
 });
